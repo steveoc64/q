@@ -106,7 +106,10 @@ func (l *logger) flush() error {
 
 	_, err = io.Copy(f, l.buf)
 	l.buf.Reset()
-	return fmt.Errorf("failed to flush q buffer: %v", err)
+	if err != nil {
+		return fmt.Errorf("failed to flush q buffer: %v", err)
+	}
+	return nil
 }
 
 // output writes to the log buffer. Each log message is prepended with a
@@ -154,7 +157,11 @@ func Q(v ...interface{}) {
 	defer std.mu.Unlock()
 
 	// Flush the buffered writes to disk.
-	defer std.flush()
+	defer func() {
+		if err := std.flush(); err != nil {
+			fmt.Println(err)
+		}
+	}()
 
 	args := formatArgs(v...)
 	funcName, file, line, err := getCallerInfo()
