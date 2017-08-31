@@ -10,4 +10,4 @@ q exports a single Q() function. This is how you use it:
     ...
     q.Q(a, b, c)
 */
-package q
+package v

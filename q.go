@@ -2,7 +2,7 @@
 // Use of this source code is governed by the MIT
 // license that can be found in the LICENSE file.
 
-package q
+package v
 
 import (
 	"bytes"
@@ -149,7 +149,7 @@ func (l *logger) output(args ...string) {
 }
 
 // Q pretty-prints the given arguments to the $TMPDIR/q log file.
-func Q(v ...interface{}) {
+func Wot(v ...interface{}) {
 	std.mu.Lock()
 	defer std.mu.Unlock()
 
